@@ -3,6 +3,8 @@ let $RC=$MYVIMRC
 
 let g:mapleader = ' '
 
+set shell=/bin/zsh
+
 set number
 " set relativenumber
 set cursorline
@@ -105,6 +107,7 @@ call plug#begin(stdpath('data') . '/plugged')
   " Colorscheme
   Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
   Plug 'Pocco81/Catppuccino.nvim'
+  Plug 'NTBBloodbath/doom-one.nvim'
   " Autocomplete
   Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/cmp-buffer'
@@ -116,8 +119,6 @@ call plug#begin(stdpath('data') . '/plugged')
   Plug 'tpope/vim-fugitive'
   " Undo
   Plug 'mbbill/undotree'
-  " Notes
-  Plug 'nvim-neorg/neorg'
   " Database
   Plug 'tpope/vim-dadbod'
   Plug 'kristijanhusak/vim-dadbod-ui'
@@ -131,12 +132,15 @@ call plug#begin(stdpath('data') . '/plugged')
   Plug 'lukas-reineke/indent-blankline.nvim'
   Plug 'folke/trouble.nvim'
   Plug 'ThePrimeagen/git-worktree.nvim'
-  Plug ('AndrewRadev/splitjoin.vim')
-  Plug ('AndrewRadev/sideways.vim')
-  Plug ('AndrewRadev/switch.vim')
-  Plug ('AndrewRadev/tagalong.vim')
-  Plug ('andymass/vim-matchup')
-  Plug ('tpope/vim-projectionist')
+  Plug 'AndrewRadev/splitjoin.vim'
+  Plug 'AndrewRadev/sideways.vim'
+  Plug 'AndrewRadev/switch.vim'
+  Plug 'AndrewRadev/tagalong.vim'
+  Plug 'andymass/vim-matchup'
+  Plug 'tpope/vim-projectionist'
+  "Plug 'sidebar-nvim/sidebar.nvim'
+  Plug 'numToStr/Comment.nvim'
+  Plug 'akinsho/toggleterm.nvim'
 call plug#end()
 
 " Catch 'y' command and use OSCYankReg to copy stuff
@@ -146,16 +150,16 @@ let g:oscyank_term = 'tmux'
 lua <<EOF
   local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
 
-  parser_configs.norg = {
-      install_info = {
-          url = "https://github.com/nvim-neorg/tree-sitter-norg",
-          files = { "src/parser.c", "src/scanner.cc" },
-          branch = "main"
-      },
-    }
+  --parser_configs.norg = {
+  --    install_info = {
+  --        url = "https://github.com/nvim-neorg/tree-sitter-norg",
+  --        files = { "src/parser.c", "src/scanner.cc" },
+  --        branch = "main"
+  --    },
+  --  }
   --- Treesitter settings
   require'nvim-treesitter.configs'.setup {
-    ensure_installed = { "ruby", "lua", "cpp", "c", "javascript", "norg" },
+    ensure_installed = { "ruby", "lua", "cpp", "c", "javascript" },
     highlight = {
       enable = true,
     },
@@ -179,7 +183,7 @@ lua <<EOF
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
     buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    --buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
     buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     buf_set_keymap('n', '<leader>k', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -227,20 +231,49 @@ lua <<EOF
     sources = {
       { name = 'nvim_lsp' },
       { name = 'buffer' },
-      { name = "neorg" },
+      --{ name = "neorg" },
     },
   })
   require('gitsigns').setup {
     signcolumn = true,
     sign_priority = 100,
     numhl      = false,
+    on_attach = function(bufnr)
+      local gs = package.loaded.gitsigns
+
+      local function map(mode, l, r, opts)
+        opts = opts or {}
+        opts.buffer = bufnr
+        vim.keymap.set(mode, l, r, opts)
+      end
+
+      -- Navigation
+      map('n', ']c', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", {expr=true})
+      map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
+
+      -- Actions
+      map({'n', 'v'}, '<leader>hs', ':Gitsigns stage_hunk<CR>')
+      map({'n', 'v'}, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+      map('n', '<leader>hS', gs.stage_buffer)
+      map('n', '<leader>hu', gs.undo_stage_hunk)
+      map('n', '<leader>hR', gs.reset_buffer)
+      map('n', '<leader>hp', gs.preview_hunk)
+      map('n', '<leader>hb', function() gs.blame_line{full=true} end)
+      map('n', '<leader>tb', gs.toggle_current_line_blame)
+      map('n', '<leader>hd', gs.diffthis)
+      map('n', '<leader>hD', function() gs.diffthis('~') end)
+      map('n', '<leader>td', gs.toggle_deleted)
+
+      -- Text object
+      map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+    end
   }
 
   -- following options are the default
   require'nvim-tree'.setup {
     view = {
       -- width of the window, can be either a number (columns) or a string in `%`, for left or right side placement
-      width = 40,
+      width = 50,
       -- side of the tree, can be one of 'left' | 'right' | 'top' | 'bottom'
       side = 'right',
       -- if true the tree will resize itself after opening a file
@@ -248,42 +281,42 @@ lua <<EOF
     }
   }
 
-  require('neorg').setup {
-    -- Tell Neorg what modules to load
-    load = {
-      ["core.defaults"] = {}, -- Load all the default modules
-      ["core.norg.concealer"] = {}, -- Allows for use of icons
-      ["core.norg.dirman"] = { -- Manage your directories with Neorg
-        config = {
-          workspaces = {
-            atlassian = "~/Documents/neorg/atlassian",
-          },
-         -- Automatically detect whenever we have entered a subdirectory of a workspace
-          autodetect = true,
-          -- Automatically change the directory to the root of the workspace every time 
-          autochdir = true,
-        }
-      },
-      ["core.norg.completion"] = {
-        config = {
-          engine = "nvim-cmp" -- We current support nvim-compe and nvim-cmp only
-        }
-      },
-      ["core.keybinds"] = { -- Configure core.keybinds
-        config = {
-          default_keybinds = true, -- Generate the default keybinds
-          neorg_leader = "<Leader>o" -- This is the default if unspecified
-        }
-      },
-    },
-  }
+  --require('neorg').setup {
+  --  -- Tell Neorg what modules to load
+  --  load = {
+  --    ["core.defaults"] = {}, -- Load all the default modules
+  --    ["core.norg.concealer"] = {}, -- Allows for use of icons
+  --    ["core.norg.dirman"] = { -- Manage your directories with Neorg
+  --      config = {
+  --        workspaces = {
+  --          atlassian = "~/Documents/neorg/atlassian",
+  --        },
+  --       -- Automatically detect whenever we have entered a subdirectory of a workspace
+  --        autodetect = true,
+  --        -- Automatically change the directory to the root of the workspace every time 
+  --        autochdir = true,
+  --      }
+  --    },
+  --    ["core.norg.completion"] = {
+  --      config = {
+  --        engine = "nvim-cmp" -- We current support nvim-compe and nvim-cmp only
+  --      }
+  --    },
+  --    ["core.keybinds"] = { -- Configure core.keybinds
+  --      config = {
+  --        default_keybinds = true, -- Generate the default keybinds
+  --        neorg_leader = "<Leader>o" -- This is the default if unspecified
+  --      }
+  --    },
+  --  },
+  --}
 
   --- LuaLine
   require('lualine').setup {
-    options = {
-      theme = 'catppuccino'
-    },
-    extensions = {'nvim-tree', 'quickfix'},
+    --options = {
+    --  theme = 'catppuccino'
+    --},
+    --extensions = {'nvim-tree', 'quickfix'},
     sections = {
       lualine_a = {"mode"},
       lualine_b = {"branch", "diff"},
@@ -328,7 +361,7 @@ lua <<EOF
     },
   }
 
-  require("telescope").load_extension("git_worktree")
+  --require("telescope").load_extension("git_worktree")
 
   --- Neogit
   local neogit = require("neogit")
@@ -344,50 +377,175 @@ lua <<EOF
 
 
   -- Colorscheme settings
-  local catppuccino = require("catppuccino")
+  --local catppuccino = require("catppuccino")
 
-  catppuccino.setup(
-      {
-      integrations = {
-        treesitter = true,
-        native_lsp = {
-          enabled = true,
-          virtual_text = {
-            errors = "italic",
-            hints = "italic",
-            warnings = "italic",
-            information = "italic",
-          },
-          underlines = {
-            errors = "underline",
-            hints = "underline",
-            warnings = "underline",
-            information = "underline",
-          }
-        },
-        gitsigns = true,
-        telescope = true,
-        nvimtree = {
-          enabled = true,
-          show_root = true,
-        },
-        indent_blankline = {
-          enabled = true,
-          colored_indent_levels = true,
-        },
-        neogit = true,
-        bufferline = false,
-        hop = true,
-      }
-    }
-  )
+  --catppuccino.setup(
+  --    {
+  --    integrations = {
+  --      treesitter = true,
+  --      native_lsp = {
+  --        enabled = true,
+  --        virtual_text = {
+  --          errors = "italic",
+  --          hints = "italic",
+  --          warnings = "italic",
+  --          information = "italic",
+  --        },
+  --        underlines = {
+  --          errors = "underline",
+  --          hints = "underline",
+  --          warnings = "underline",
+  --          information = "underline",
+  --        }
+  --      },
+  --      gitsigns = true,
+  --      telescope = true,
+  --      nvimtree = {
+  --        enabled = true,
+  --        show_root = true,
+  --      },
+  --      indent_blankline = {
+  --        enabled = true,
+  --        colored_indent_levels = true,
+  --      },
+  --      neogit = true,
+  --      bufferline = false,
+  --      hop = true,
+  --    }
+  --  }
+  --)
 
+  require('doom-one').setup({
+      cursor_coloring = false,
+      terminal_colors = false,
+      italic_comments = true,
+      enable_treesitter = true,
+      transparent_background = false,
+      pumblend = {
+          enable = true,
+          transparency_amount = 20,
+      },
+      plugins_integrations = {
+          neorg = true,
+          barbar = true,
+          bufferline = false,
+          gitgutter = false,
+          gitsigns = true,
+          telescope = true,
+          neogit = true,
+          nvim_tree = true,
+          dashboard = true,
+          startify = true,
+          whichkey = true,
+          indent_blankline = true,
+          vim_illuminate = true,
+          lspsaga = true,
+      },
+  })
+
+  --require("sidebar-nvim").setup({
+  --  disable_default_keybindings = 0,
+  --  bindings = nil,
+  --  open = false,
+  --  side = "left",
+  --  initial_width = 35,
+  --  hide_statusline = false,
+  --  update_interval = 1000,
+  --  sections = { "buffers", "git", "containers" },
+  --  section_separator = {"", "-----", ""},
+  --  containers = {
+  --      attach_shell = "/bin/sh", show_all = true, interval = 5000,
+  --  },
+  --  datetime = { format = "%a %b %d, %H:%M", clocks = { { name = "local" } } },
+  --  todos = { ignored_paths = { "~" } },
+  --  disable_closing_prompt = false
+  --})
+
+  local Terminal  = require('toggleterm.terminal').Terminal
+  local tig = Terminal:new({
+    cmd = "tig status",
+    dir = "git_dir",
+    direction = "float",
+    float_opts = {
+      border = "double",
+    },
+    on_open = function(term)
+      vim.cmd("startinsert!")
+      vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+    end,
+    on_close = function(term)
+    end,
+  })
+
+  function _tig_toggle()
+    tig:toggle()
+  end
+
+  local lazygit = Terminal:new({
+    cmd = "lazygit",
+    dir = "git_dir",
+    direction = "float",
+    float_opts = {
+      border = "double",
+    },
+    on_open = function(term)
+      vim.cmd("startinsert!")
+      vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+    end,
+    on_close = function(term)
+    end,
+  })
+
+  function _lazygit_toggle()
+    lazygit:toggle()
+  end
+
+  vim.api.nvim_set_keymap("n", "<leader>gt", "<cmd>lua _tig_toggle()<CR>", {noremap = true, silent = true})
+  vim.api.nvim_set_keymap("n", "<leader>gl", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
+
+
+  require("toggleterm").setup {
+    -- size can be a number or function which is passed the current terminal
+    -- size = 20 | function(term)
+    --   if term.direction == "horizontal" then
+    --     return 15
+    --   elseif term.direction == "vertical" then
+    --     return vim.o.columns * 0.4
+    --   end
+    -- end,
+    open_mapping = [[<c-/>]],
+    --on_open = fun(t: Terminal), -- function to run when the terminal opens
+    --on_close = fun(t: Terminal), -- function to run when the terminal closes
+    hide_numbers = true, -- hide the number column in toggleterm buffers
+    shade_filetypes = {},
+    shade_terminals = true,
+    shading_factor = '1', -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
+    start_in_insert = true,
+    insert_mappings = true, -- whether or not the open mapping applies in insert mode
+    terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
+    persist_size = true,
+    direction = 'float',
+    close_on_exit = true, -- close the terminal window when the process exits
+    shell = 'fish', -- change the default shell
+    -- This field is only relevant if direction is set to 'float'
+    float_opts = {
+      border = 'curved',
+      winblend = 0,
+      highlights = {
+        border = "Normal",
+        background = "Normal",
+      },
+    },
+  }
+
+  require('Comment').setup()
 EOF
 
 " Colorscheme
-"let g:tokyonight_style = "night"
+let g:tokyonight_style = "night"
 "colorscheme tokyonight
-colorscheme catppuccino
+"colorscheme catppuccino
+colorscheme doom-one
 
 " TS Hint Textobject
 omap     <silent> m :<C-U>lua require('tsht').nodes()<CR>
@@ -413,10 +571,12 @@ endif
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fl <cmd>Telescope live_grep<cr>
 nnoremap <leader>fg <cmd>Telescope grep_string<cr>
+nnoremap <leader>fo <cmd>Telescope oldfiles<cr>
 nnoremap <leader>fj <cmd>Telescope jumplist<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fr <cmd>Telescope resume<cr>
+nnoremap <leader>fs <cmd>Telescope git_status<cr>
 
 nnoremap <leader>gw <cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>
 nnoremap <leader>gc <cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>
@@ -459,6 +619,35 @@ nnoremap <leader>td :lua require("harpoon.term").gotoTerminal(2)<CR>
 
 " Hop
 lua vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_words()<cr>", {})
+lua vim.api.nvim_set_keymap('v', 'f', "<cmd>lua require'hop'.hint_words()<cr>", {})
+"normal
+    "up
+    nmap K :HopLineStartBC<CR>
+    "down
+    nmap J :HopLineStartAC<CR>
+    "left
+    "nmap H :HopWordCurrentLineBC<CR>
+    "right
+    "nmap L :HopWordCurrentLineAC<CR>
+    "char anywhere
+    "nmap f :HopChar1<CR>
+    "pattern anywhere
+    "nmap s :HopPattern<CR>
+    " Line
+    nmap F <cmd>HopLine<CR>
+"visual
+    "up
+    vmap K <cmd>HopLineStartBC<CR>
+    "down
+    vmap J <cmd>HopLineStartAC<CR>
+    "left
+    "vmap H <cmd>HopWordCurrentLineBC<CR>
+    "right
+    "vmap L <cmd>HopWordCurrentLineAC<CR>
+    "char anywhere
+    "vmap f <cmd>HopChar1<CR>
+    " Line
+    vmap F <cmd>HopLine<CR>
 
 " LSP Saga
 nnoremap <silent> gpd <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
@@ -496,11 +685,11 @@ nnoremap n nzzzv
 nnoremap N Nzzzv
 
 " Unite the lines
-nnoremap J mzJ`z
+" nnoremap J mzJ`z
 
 " Move up/down
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
+"vnoremap J :m '>+1<CR>gv=gv
+"vnoremap K :m '<-2<CR>gv=gv
 
 " SplitJoin
 nmap sj :SplitjoinSplit<cr>
