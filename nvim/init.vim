@@ -6,7 +6,6 @@ let g:mapleader = ' '
 set shell=/bin/zsh
 
 set number
-" set relativenumber
 set cursorline
 
 " Tabs are spaces
@@ -29,9 +28,6 @@ set splitbelow                            " always open splits below
 set scrolloff=10                          " keep at least 10 lines above/below
 set sidescrolloff=5                       " keep at least 5 lines right/left
 set cmdheight=2                           " Give more space for displaying messages
-
-" Jumplist behaviour
-" set jumpoptions+=stack
 
 " File Handling {{{
 
@@ -220,9 +216,6 @@ nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fr <cmd>Telescope resume<cr>
 nnoremap <leader>fs <cmd>Telescope git_status<cr>
-
-" nnoremap <leader>gw <cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>
-" nnoremap <leader>gc <cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>
 
 autocmd User TelescopePreviewerLoaded setlocal number
 
