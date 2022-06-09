@@ -10,7 +10,41 @@ telescope.setup {
 
     prompt_prefix = " ",
     selection_caret = " ",
-    path_display = { "smart" },
+    path_display = { "truncate" },
+
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
+      "--trim"
+    },
+      
+    layout_strategy = "horizontal",
+    layout_config = {
+      horizontal = {
+        prompt_position = "bottom",
+        preview_width = 0.6,
+        results_width = 0.5,
+      },
+      vertical = {
+        mirror = false,
+      },
+      width = 0.95,
+      height = 0.95,
+      preview_cutoff = 120,
+    },
+
+    winblend = 0,
+    border = {},
+    borderchars = {
+      prompt = {"━", "┃", "━", "┃", "┏", "┓", "┛", "┗"},
+      preview = {"─", "│", "─", "│", "┌", "┐", "┘", "└"},
+      results = {"─", "│", "─", "│", "┌", "┐", "┘", "└"},
+    },
 
     mappings = {
       i = {
@@ -78,6 +112,15 @@ telescope.setup {
     },
   },
   pickers = {
+    find_files = {
+      theme = "dropdown",
+      layout_config = {
+        width = 0.7,
+        height = 0.6,
+        -- preview_width = 0.6,
+      },
+      path_display = { "truncate" },
+    },
     -- Default configuration for builtin pickers goes here:
     -- picker_name = {
     --   picker_config_key = value,

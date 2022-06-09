@@ -147,6 +147,8 @@ call plug#begin(stdpath('data') . '/plugged')
   Plug 'ray-x/guihua.lua'  "lua GUI lib
   Plug 'ray-x/sad.nvim'
   Plug 'nvim-neorg/neorg'
+  Plug 'tami5/sqlite.lua'
+  Plug 'AckslD/nvim-neoclip.lua'
 
   "Plug 'sidebar-nvim/sidebar.nvim'
   Plug 'numToStr/Comment.nvim'
@@ -176,6 +178,7 @@ lua <<EOF
   require("user.neogit")
   require("user.colorscheme")
   require("user.toggleterm")
+  require("user.neoclip")
   
   require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
   require('Comment').setup()
@@ -218,8 +221,8 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fr <cmd>Telescope resume<cr>
 nnoremap <leader>fs <cmd>Telescope git_status<cr>
 
-nnoremap <leader>gw <cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>
-nnoremap <leader>gc <cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>
+" nnoremap <leader>gw <cmd>lua require('telescope').extensions.git_worktree.git_worktrees()<cr>
+" nnoremap <leader>gc <cmd>lua require('telescope').extensions.git_worktree.create_git_worktree()<cr>
 
 autocmd User TelescopePreviewerLoaded setlocal number
 
@@ -336,3 +339,5 @@ nnoremap N Nzzzv
 nmap sj :SplitjoinSplit<cr>
 nmap sk :SplitjoinJoin<cr>
 
+" Alternative ESC
+noremap! kj <esc>
