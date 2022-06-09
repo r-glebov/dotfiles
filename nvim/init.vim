@@ -286,9 +286,6 @@ lua vim.api.nvim_set_keymap('v', 'f', "<cmd>lua require'hop'.hint_words()<cr>", 
     " Line
     vmap F <cmd>HopLine<CR>
 
-" LSP Saga
-" nnoremap <silent> gpd <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
-
 " Trouble
 nnoremap <leader>xx <cmd>TroubleToggle<cr>
 nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
@@ -320,9 +317,6 @@ nnoremap Y yg$
 " Have it all centered
 nnoremap n nzzzv
 nnoremap N Nzzzv
-
-" Unite the lines
-" nnoremap J mzJ`z
 
 " Move up/down
 "vnoremap J :m '>+1<CR>gv=gv
