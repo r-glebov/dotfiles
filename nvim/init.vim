@@ -328,3 +328,7 @@ nmap sk :SplitjoinJoin<cr>
 
 " Alternative ESC
 noremap! kj <esc>
+
+" vim-fugitive
+
+nmap gb :Git blame<CR>
