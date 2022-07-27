@@ -102,10 +102,10 @@ call plug#begin(stdpath('data') . '/plugged')
   Plug 'folke/lua-dev.nvim'
   Plug 'williamboman/nvim-lsp-installer'
 
-  " Plug 'glepnir/lspsaga.nvim'
   " Colorscheme
   Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
   Plug 'NTBBloodbath/doom-one.nvim'
+  Plug 'catppuccin/nvim', {'as': 'catppuccin'}
   
   " Autocomplete
   Plug 'hrsh7th/cmp-nvim-lsp'
@@ -181,10 +181,12 @@ lua <<EOF
 EOF
 
 " Colorscheme
-let g:tokyonight_style = "night"
+" let g:tokyonight_style = "night"
 "colorscheme tokyonight
 "colorscheme catppuccino
-colorscheme doom-one
+" colorscheme doom-one
+let g:catppuccin_flavour = "macchiato" " latte, frappe, macchiato, mocha
+colorscheme catppuccin
 
 " TS Hint Textobject
 omap     <silent> m :<C-U>lua require('tsht').nodes()<CR>
