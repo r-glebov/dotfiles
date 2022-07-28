@@ -3,31 +3,7 @@ let $RC=$MYVIMRC
 
 let g:mapleader = ' '
 
-set shell=/bin/zsh
-
-set number
-set cursorline
-
-" Tabs are spaces
-set expandtab
-
-set shiftwidth=2
-set tabstop=2
-set softtabstop=2
-
-set colorcolumn=120
-
-" No search highlight
 set nohlsearch
-" Live preview for search and replace
-set inccommand=split
-
-" Interface related options
-set splitright                            " always open vsplit right
-set splitbelow                            " always open splits below
-set scrolloff=10                          " keep at least 10 lines above/below
-set sidescrolloff=5                       " keep at least 5 lines right/left
-set cmdheight=2                           " Give more space for displaying messages
 
 " File Handling {{{
 
@@ -75,12 +51,6 @@ set wildignore+=*.gif,*.jpg,*.jpeg,*.otf,*.png,*.svg,*.ttf
 set wildignorecase
 
 " }}}
-
-" Local history
-set undofile
-
-" This variable must be enabled for colors to be applied properly
-set termguicolors
 
 " Autocomplete options
 set completeopt=menu,menuone,noselect
@@ -160,10 +130,12 @@ call plug#begin(stdpath('data') . '/plugged')
 call plug#end()
 
 " Catch 'y' command and use OSCYankReg to copy stuff
-autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif
+" autocmd TextYankPost * if v:event.operator is 'y' && v:event.regname is '' | execute 'OSCYankReg "' | endif
 let g:oscyank_term = 'tmux'
 
 lua <<EOF
+  require("user.options")
+  require("user.autocommands")
   require("user.treesitter")
   require("user.lsp")
   require("user.cmp")
@@ -220,7 +192,7 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <leader>fr <cmd>Telescope resume<cr>
 nnoremap <leader>fs <cmd>Telescope git_status<cr>
 
-autocmd User TelescopePreviewerLoaded setlocal number
+"autocmd User TelescopePreviewerLoaded setlocal number
 
 " Copy current buffer path to clipboard
 nnoremap <Leader>c :let @+=expand('%:p')<CR>  
