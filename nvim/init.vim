@@ -145,6 +145,7 @@ call plug#begin(stdpath('data') . '/plugged')
   Plug 'nvim-neorg/neorg'
   Plug 'tami5/sqlite.lua'
   Plug 'AckslD/nvim-neoclip.lua'
+  Plug 'natecraddock/telescope-zf-native.nvim'
 
   "Plug 'sidebar-nvim/sidebar.nvim'
   Plug 'numToStr/Comment.nvim'
