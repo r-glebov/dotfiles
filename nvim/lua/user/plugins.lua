@@ -112,8 +112,11 @@ return packer.startup(function(use)
   use { "vim-test/vim-test", commit = "9bd4cd2d772018087d016fa4d35c45c09f13effd" }
   use { "ThePrimeagen/harpoon", commit = "d3d3d22b6207f46f8ca64946f4d781e975aec0fc" }
 
+  -- Dashboard
+  use { "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" }
+
   -- Utilities
-  use { "ojroques/vim-oscyank ", commit = "ebcb47da66329d2c654e380d87879a935576c176" }
+  use { "ojroques/vim-oscyank ", commit = "360ccdc01b18cd434588c34e15e5ea382b436de8" }
   use { "christianchiarulli/hop.nvim", commit = "b93ed4cea9c7df625d04e41cb15370b5c43cb578" }
   use { "lukas-reineke/indent-blankline.nvim", commit = "6177a59552e35dfb69e1493fd68194e673dc3ee2" }
   use { "AndrewRadev/splitjoin.vim", commit = "4df2b1f4bdaaa3526ff714f5dddb63015a13c511" }
