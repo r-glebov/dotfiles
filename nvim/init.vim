@@ -1,80 +1,6 @@
 let $RTP=split(&runtimepath, ',')[0]
 let $RC=$MYVIMRC
 
-" call plug#begin(stdpath('data') . '/plugged')
-"   Plug 'nvim-lua/plenary.nvim'
-"   Plug 'nvim-lua/popup.nvim'
-"   Plug 'ojroques/vim-oscyank'
-"   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-"   Plug 'mfussenegger/nvim-ts-hint-textobject'
-"   Plug 'kyazdani42/nvim-web-devicons' " for file icons
-"   Plug 'kyazdani42/nvim-tree.lua'
-"   Plug 'kevinhwang91/nvim-bqf'
-"   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-"   Plug 'junegunn/fzf.vim'
-"   Plug 'nvim-telescope/telescope.nvim'
-"   " LSP
-"   Plug 'neovim/nvim-lspconfig'
-"   Plug 'folke/lua-dev.nvim'
-"   Plug 'williamboman/nvim-lsp-installer'
-"
-"   " Colorscheme
-"   Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-"   Plug 'NTBBloodbath/doom-one.nvim'
-"   Plug 'catppuccin/nvim', {'as': 'catppuccin'}
-"   
-"   " Autocomplete
-"   Plug 'hrsh7th/cmp-nvim-lsp'
-"   Plug 'hrsh7th/cmp-nvim-lua'
-"   Plug 'hrsh7th/cmp-buffer'
-"   Plug 'hrsh7th/nvim-cmp'
-"   Plug 'saadparwaiz1/cmp_luasnip'
-"
-"   " GIT
-"   Plug 'lewis6991/gitsigns.nvim'
-"   Plug 'TimUntersberger/neogit'
-"   Plug 'sindrets/diffview.nvim'
-"   Plug 'tpope/vim-fugitive'
-"   " Undo
-"   Plug 'mbbill/undotree'
-"   " Database
-"   Plug 'tpope/vim-dadbod'
-"   Plug 'kristijanhusak/vim-dadbod-ui'
-"   " Status Line
-"   Plug 'hoob3rt/lualine.nvim'
-"   " Testing
-"   Plug 'vim-test/vim-test'
-"   Plug 'ThePrimeagen/harpoon'
-"   " Utilities
-"   Plug 'phaazon/hop.nvim'
-"   Plug 'lukas-reineke/indent-blankline.nvim'
-"   Plug 'folke/trouble.nvim'
-"   Plug 'ThePrimeagen/git-worktree.nvim'
-"   Plug 'AndrewRadev/splitjoin.vim'
-"   Plug 'AndrewRadev/sideways.vim'
-"   Plug 'AndrewRadev/switch.vim'
-"   Plug 'AndrewRadev/tagalong.vim'
-"   Plug 'andymass/vim-matchup'
-"   Plug 'tpope/vim-projectionist'
-"   Plug 'ray-x/guihua.lua'  "lua GUI lib
-"   Plug 'ray-x/sad.nvim'
-"   Plug 'nvim-neorg/neorg'
-"   Plug 'tami5/sqlite.lua'
-"   Plug 'AckslD/nvim-neoclip.lua'
-"   Plug 'natecraddock/telescope-zf-native.nvim'
-"
-"   "Plug 'sidebar-nvim/sidebar.nvim'
-"   Plug 'numToStr/Comment.nvim'
-"   Plug 'akinsho/toggleterm.nvim'
-"
-"   " Debugging
-"   Plug 'mfussenegger/nvim-dap'
-"
-"   " Snippets
-"   Plug 'L3MON4D3/LuaSnip'
-"   Plug 'rafamadriz/friendly-snippets'
-" call plug#end()
-
 lua <<EOF
   require("user.plugins")
   require("user.options")
@@ -88,9 +14,7 @@ lua <<EOF
   require("user.neorg")
   require("user.lualine")
   require("user.telescope")
-  --require("user.neogit")
   require("user.colorscheme")
-  -- require("user.toggleterm")
   require("user.neoclip")
   
   require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
@@ -109,12 +33,6 @@ nnoremap <leader>n :NvimTreeFindFile<CR>
 " Quickfix
 nnoremap <C-j> :cnext<CR> 
 nnoremap <C-k> :cprev<CR> 
-
-" Ripgrep instead of vimgrep search
-" if executable('rg')
-"   set grepprg=rg\ --no-heading\ --vimgrep
-"   set grepformat=%f:%l:%c:%m
-" endif
 
 " Telescope
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
@@ -169,17 +87,9 @@ lua vim.api.nvim_set_keymap('n', 'f', "<cmd>lua require'hop'.hint_words()<cr>", 
 lua vim.api.nvim_set_keymap('v', 'f', "<cmd>lua require'hop'.hint_words()<cr>", {})
 "normal
     "up
-    "nmap K :HopLineStartBC<CR>
+    nmap K :HopLineStartBC<CR>
     "down
     nmap J :HopLineStartAC<CR>
-    "left
-    "nmap H :HopWordCurrentLineBC<CR>
-    "right
-    "nmap L :HopWordCurrentLineAC<CR>
-    "char anywhere
-    "nmap f :HopChar1<CR>
-    "pattern anywhere
-    "nmap s :HopPattern<CR>
     " Line
     nmap F <cmd>HopLine<CR>
 "visual
@@ -187,12 +97,6 @@ lua vim.api.nvim_set_keymap('v', 'f', "<cmd>lua require'hop'.hint_words()<cr>", 
     vmap K <cmd>HopLineStartBC<CR>
     "down
     vmap J <cmd>HopLineStartAC<CR>
-    "left
-    "vmap H <cmd>HopWordCurrentLineBC<CR>
-    "right
-    "vmap L <cmd>HopWordCurrentLineAC<CR>
-    "char anywhere
-    "vmap f <cmd>HopChar1<CR>
     " Line
     vmap F <cmd>HopLine<CR>
 
@@ -228,16 +132,15 @@ nnoremap Y yg$
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
-" Move up/down
-"vnoremap J :m '>+1<CR>gv=gv
-"vnoremap K :m '<-2<CR>gv=gv
-
 " SplitJoin
 nmap sj :SplitjoinSplit<cr>
 nmap sk :SplitjoinJoin<cr>
 
 " Alternative ESC
 noremap! kj <esc>
+
+" Alternative Enter
+noremap! jk <CR>
 
 " vim-fugitive
 
