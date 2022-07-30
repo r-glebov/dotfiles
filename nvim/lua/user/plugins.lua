@@ -116,7 +116,7 @@ return packer.startup(function(use)
   use { "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" }
 
   -- Utilities
-  use { "ojroques/vim-oscyank ", commit = "360ccdc01b18cd434588c34e15e5ea382b436de8" }
+  use { "ojroques/vim-oscyank", commit = "360ccdc01b18cd434588c34e15e5ea382b436de8" }
   use { "christianchiarulli/hop.nvim", commit = "b93ed4cea9c7df625d04e41cb15370b5c43cb578" }
   use { "lukas-reineke/indent-blankline.nvim", commit = "6177a59552e35dfb69e1493fd68194e673dc3ee2" }
   use { "AndrewRadev/splitjoin.vim", commit = "4df2b1f4bdaaa3526ff714f5dddb63015a13c511" }
@@ -135,9 +135,6 @@ return packer.startup(function(use)
     requires = {
       {'kkharji/sqlite.lua', module = 'sqlite'},
     },
-    config = function()
-      require('neoclip').setup()
-    end,
   }
   use { "numToStr/Comment.nvim", commit = "bdf9ca64dcf4cc3c411aaeee4cfba59398d02aa8" }
 

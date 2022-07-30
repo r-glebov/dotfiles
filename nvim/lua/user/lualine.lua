@@ -1,8 +1,8 @@
 require('lualine').setup {
-  --options = {
-  --  theme = 'catppuccino'
-  --},
-  --extensions = {'nvim-tree', 'quickfix'},
+  options = {
+   theme = 'catppuccin'
+  },
+  extensions = {'nvim-tree', 'quickfix'},
   sections = {
     lualine_a = {"mode"},
     lualine_b = {"branch", "diff"},
