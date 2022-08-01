@@ -38,7 +38,7 @@ HISTSIZE=10000000
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=121'
 
 
-export GEM_HOME="$HOME/.rvm/gems/ruby-2.6.3@status-page"
+#export GEM_HOME="$HOME/.rvm/gems/ruby-2.6.3@gemset-name"
 export PATH="$HOME/.rvm/rubies/ruby-2.6.3/bin:$PATH"
 #export PATH="/usr/local/opt/ruby/bin:$PATH"
 export PATH="$PATH:$HOME/.rvm/bin"
