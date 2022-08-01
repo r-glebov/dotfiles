@@ -129,10 +129,8 @@ return packer.startup(function(use)
   use { "ray-x/sad.nvim", commit = "3f7f7af8df32136180b39db804d6d1e090996ecf" }
   use {
     "nvim-neorg/neorg",
-    -- tag = "latest",
-    ft = "norg",
     commit = "535fca8fd422fdedd686825d1f59a4e40e00259e",
-    after = { "telescope.nvim", "nvim-treesitter" }, -- You may want to specify Telescope here as well
+    after = { "nvim-treesitter" }, -- You may want to specify Telescope here as well
   }
   use { "kkharji/sqlite.lua", commit = "9ccd2a6538d8a201d1ea08784bd866950e1b4130" }
   use {

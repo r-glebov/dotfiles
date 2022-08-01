@@ -11,12 +11,12 @@ lua <<EOF
   require("user.cmp")
   require("user.gitsigns")
   require("user.nvim-tree")
-  require("user.neorg")
   require("user.lualine")
   require("user.telescope")
   require("user.colorscheme")
   require("user.neoclip")
   require("user.alpha")
+  require("user.neorg")
   
   require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
   require('Comment').setup()
