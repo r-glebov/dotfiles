@@ -128,6 +128,13 @@ return packer.startup(function(use)
   use { "ray-x/guihua.lua", commit = "f1a52d5faad9d472ee3f30ab08294177ce6a6d41" }
   use { "ray-x/sad.nvim", commit = "3f7f7af8df32136180b39db804d6d1e090996ecf" }
   use { "nvim-neorg/neorg", commit = "535fca8fd422fdedd686825d1f59a4e40e00259e" }
+  use {
+    "nvim-neorg/neorg",
+    -- tag = "latest",
+    ft = "norg",
+    commit = "535fca8fd422fdedd686825d1f59a4e40e00259e",
+    after = "nvim-treesitter", -- You may want to specify Telescope here as well
+  }
   use { "kkharji/sqlite.lua", commit = "9ccd2a6538d8a201d1ea08784bd866950e1b4130" }
   use {
     "AckslD/nvim-neoclip.lua",
