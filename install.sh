@@ -4,11 +4,11 @@ dotfiles_dir=/workspaces/.codespaces/.persistedshare/dotfiles/
 
 # Symlink the files
 mkdir -p ~/.config/nvim
-ln -sf $dotfiles_dir/nvim ~/.config/nvim
+ln -sf $dotfiles_dir/nvim ~/.config
 
 # Run nvim command to install plugins
-RUN nvim --headless -c 'autocmd User PackerComplete quitall' -c 'silent PackerSync'
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'silent PackerSync'
 
 # Run nvim command to install Treesitter languages
-RUN nvim --headless -c 'set cmdheight=50' -c 'silent TSInstallSync all' -c 'sleep 20' -c 'qall'
+nvim --headless -c 'set cmdheight=50' -c 'silent TSInstallSync all' -c 'sleep 20' -c 'qall'
 
