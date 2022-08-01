@@ -3,9 +3,9 @@
 cd ~/
 
 # Copy .dotfiles from git repo
-git clone git@github.com:r-glebov/dotfiles.git
+git clone git@github.com:r-glebov/dotfiles.git ~/.dotfiles
 
-dotfiles_dir=~/dotfiles
+dotfiles_dir=~/.dotfiles
 
 # Symlink the files
 mkdir -p ~/.config/nvim
