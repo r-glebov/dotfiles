@@ -8,6 +8,7 @@ git clone git@github.com:r-glebov/dotfiles.git
 dotfiles_dir=~/dotfiles
 
 # Symlink the files
+mkdir -p ~/.config/nvim
 ln -sf $dotfiles_dir/nvim ~/.config/nvim
 
 # Run nvim command to install plugins
