@@ -16,7 +16,7 @@ lua <<EOF
   require("user.colorscheme")
   require("user.neoclip")
   require("user.alpha")
-  require("user.neorg")
+  --require("user.neorg")
   
   require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
   require('Comment').setup()

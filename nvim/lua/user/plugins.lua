@@ -129,8 +129,33 @@ return packer.startup(function(use)
   use { "ray-x/sad.nvim", commit = "3f7f7af8df32136180b39db804d6d1e090996ecf" }
   use {
     "nvim-neorg/neorg",
-    commit = "535fca8fd422fdedd686825d1f59a4e40e00259e",
+    tag = "0.0.11",
     after = { "nvim-treesitter" }, -- You may want to specify Telescope here as well
+    config = function ()
+      require('neorg').setup {
+        -- Tell Neorg what modules to load
+        load = {
+          ["core.defaults"] = {}, -- Load all the default modules
+          ["core.norg.concealer"] = {}, -- Allows for use of icons
+          ["core.norg.dirman"] = { -- Manage your directories with Neorg
+            config = {
+              workspaces = {
+                atlassian = "~/Documents/neorg/atlassian",
+              },
+             -- Automatically detect whenever we have entered a subdirectory of a workspace
+              autodetect = true,
+              -- Automatically change the directory to the root of the workspace every time 
+              autochdir = true,
+            }
+          },
+          ["core.norg.completion"] = {
+            config = {
+              engine = "nvim-cmp" -- We current support nvim-compe and nvim-cmp only
+            }
+          },
+        },
+      }
+    end
   }
   use { "kkharji/sqlite.lua", commit = "9ccd2a6538d8a201d1ea08784bd866950e1b4130" }
   use {
