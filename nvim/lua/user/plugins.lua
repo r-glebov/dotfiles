@@ -50,6 +50,19 @@ return packer.startup(function(use)
     'nvim-treesitter/nvim-treesitter',
     commit = "8aeb7ad5dc55f8532578211e749261e491b116e9",
     run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+    config = function()
+      require'nvim-treesitter.configs'.setup {
+        ensure_installed = { "ruby", "lua", "javascript", "norg", "norg_meta", "norg_table" },
+        highlight = {
+          enable = true,
+          disable = {'org'},
+          additional_vim_regex_highlighting = {'org'},
+        },
+        matchup = {
+          enable = true,
+        },
+      }
+    end
   }
 
   -- Telescope
