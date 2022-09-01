@@ -1,0 +1,18 @@
+require("user.plugins")
+require("user.options")
+require("user.autocommands")
+require("user.keymaps")
+require("user.treesitter")
+require("user.lsp")
+require("user.cmp")
+require("user.gitsigns")
+require("user.nvim-tree")
+require("user.lualine")
+require("user.telescope")
+require("user.colorscheme")
+require("user.neoclip")
+require("user.alpha")
+--require("user.neorg")
+
+require("hop").setup { keys = 'etovxqpdygfblzhckisuran' }
+require("Comment").setup()
