@@ -52,7 +52,8 @@ return packer.startup(function(use)
     run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
     config = function()
       require'nvim-treesitter.configs'.setup {
-        ensure_installed = { "ruby", "lua", "javascript", "norg", "norg_meta", "norg_table" },
+        -- ensure_installed = { "ruby", "lua", "javascript", "norg", "norg_meta", "norg_table" },
+        ensure_installed = { "ruby", "lua", "javascript" },
         highlight = {
           enable = true,
           disable = {'org'},
