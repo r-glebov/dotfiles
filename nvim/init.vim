@@ -14,7 +14,7 @@ lua <<EOF
   require("user.lualine")
   require("user.telescope")
   require("user.colorscheme")
-  require("user.neoclip")
+  --require("user.neoclip")
   require("user.alpha")
   --require("user.neorg")
   
