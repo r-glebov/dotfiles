@@ -19,15 +19,15 @@
 -- }
 
 --- Treesitter settings
-require'nvim-treesitter.configs'.setup {
-  --ensure_installed = { "ruby", "lua", "javascript", "norg", "norg_meta", "norg_table" },
-  ensure_installed = { "ruby", "lua", "javascript" },
-  highlight = {
-    enable = true,
-    disable = {'org'},
-    additional_vim_regex_highlighting = {'org'},
-  },
-  matchup = {
-    enable = true,
-  },
-}
+-- require'nvim-treesitter.configs'.setup {
+--   --ensure_installed = { "ruby", "lua", "javascript", "norg", "norg_meta", "norg_table" },
+--   ensure_installed = { "ruby", "lua", "javascript" },
+--   highlight = {
+--     enable = true,
+--     disable = {'org'},
+--     additional_vim_regex_highlighting = {'org'},
+--   },
+--   matchup = {
+--     enable = true,
+--   },
+-- }

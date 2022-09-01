@@ -6,7 +6,7 @@ lua <<EOF
   require("user.options")
   require("user.autocommands")
   require("user.keymaps")
-  require("user.treesitter")
+  --require("user.treesitter")
   require("user.lsp")
   require("user.cmp")
   require("user.gitsigns")
