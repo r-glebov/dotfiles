@@ -126,7 +126,7 @@ keymap("n", "sk", "<CMD>SplitjoinJoin<CR>")
 
 
 -- Alternative ESC
-keymap("n", "kk", "<esc>")
+keymap("i", "kk", "<esc>")
 --noremap! kj <esc>
 
 -- Copy current buffer path to clipboard
