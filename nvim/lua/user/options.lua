@@ -43,7 +43,7 @@ vim.g.noswapfile = true
 vim.g.nowritebackup = true
 
 -- OscYank related stuff
-vim.g.oscyank_term = "tmux"
+vim.g.oscyank_term = "default"
 
 if vim.fn.executable('rg') == 1 then
   vim.opt.grepprg = 'rg --no-heading --vimgrep --follow'
